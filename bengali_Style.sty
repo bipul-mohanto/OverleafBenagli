@@ -1,0 +1,105 @@
+\ProvidesPackage{bengali_Style}
+
+% Import polyglossia for language support
+\usepackage{polyglossia}
+\setdefaultlanguage[numerals=Bengali,changecounternumbering=true]{bengali} % making enumaration, citation in bibliograpy in bengali
+
+% Set the main language as Bengali, but allow others
+\setmainlanguage{bengali}
+\setotherlanguages{english}
+
+% Set custom fonts for Bengali with bold and italic variants
+\newfontfamily\bengalifont[
+    Script=Bengali,
+    BoldFont=Ruposhi Bangla UI Uni Bold.ttf,
+    ItalicFont=Ruposhi Bangla UI Uni Bold Italic.ttf,
+    BoldItalicFont=Ruposhi Bangla UI Uni Bold Italic.ttf
+]{Ruposhi Bangla UI Uni.ttf}
+
+% Set custom fonts for English (no need for Script=english)
+% \newfontfamily\englishfont[
+%     BoldFont=SwanseaBold-D0ox.ttf,
+%     ItalicFont=SwanseaItalic-AwqD.ttf,
+%     BoldItalicFont=SwanseaBoldItalic-p3Dv.ttf
+% ]{Swansea-q3pd.ttf}
+
+% replaced to fix citation during English text
+% Alternatively, can keep above and use "}" before citation, but that will be troublesome. 
+
+\newfontfamily\EnglishFamily[
+    BoldFont=SwanseaBold-D0ox.ttf,
+    ItalicFont=SwanseaItalic-AwqD.ttf,
+    BoldItalicFont=SwanseaBoldItalic-p3Dv.ttf
+]{Swansea-q3pd.ttf}
+\newcommand{\englishfont}[1]{{\EnglishFamily #1}}
+
+% Set the default size of the document text to normalsize
+\AtBeginDocument{%
+    \normalsize
+}
+
+% Ensure the bullet point matches the font and size of the text
+\renewcommand\labelitemi{\normalsize\textemdash} % Use an en-dash as a bullet
+
+% TODO
+% \renewcommand\labelitemi{\normalsize\text{\char"25CF}} % Use a white bullet
+
+% Mapping for Arabic numerals to Bengali numerals using \ifcase
+\newcommand{\mybengalinumber}[1]{%
+  \ifcase#1 ০% 0
+  \or ১% 1
+  \or ২% 2
+  \or ৩% 3
+  \or ৪% 4
+  \or ৫% 5
+  \or ৬% 6
+  \or ৭% 7
+  \or ৮% 8
+  \or ৯% 9
+  \fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bengali citation number
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\patchcmd{\bibcite}{#2}{\mybengalinumber{#2}}{}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefine section and subsection numbers to use Bengali numerals
+\renewcommand\thesection{\mybengalinumber{\value{section}}}
+\renewcommand\thesubsection{\mybengalinumber{\value{section}}.\mybengalinumber{\value{subsection}}}
+\renewcommand\thesubsubsection{\mybengalinumber{\value{section}}.\mybengalinumber{\value{subsection}}.\mybengalinumber{\value{subsubsection}}}
+
+% Define custom \subsubsubsection
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\mybengalinumber{\value{section}}.\mybengalinumber{\value{subsection}}.\mybengalinumber{\value{subsubsection}}.\mybengalinumber{\value{subsubsubsection}}}
+\newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+  {-2ex\@plus -0.5ex \@minus -0.2ex}%
+  {0.5ex \@plus 0.2ex}%
+  {\normalfont\normalsize\bfseries}}
+
+% Ensuring section headings are bold and properly styled
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus.2ex}%
+  {\normalfont\Large\bfseries}}  % Bold and large font size for section
+
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex \@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\large\bfseries}}  % Bold and slightly smaller than section
+
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex \@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}  % Bold and normal size for subsubsection
+\makeatother
+
+% Redefine page number to use Bengali numerals without leading zeros
+\renewcommand{\thepage}{%
+  \ifnum\value{page}>99 \mybengalinumber{\numexpr\value{page}/100\relax}\fi% Hundreds place if applicable
+  \ifnum\value{page}>9 \mybengalinumber{\numexpr(\value{page}/10)\relax - \value{page}/100*10\relax}\fi% Tens place if applicable
+  \mybengalinumber{\numexpr\value{page} - \value{page}/10*10\relax}% Ones place
+}
+
+

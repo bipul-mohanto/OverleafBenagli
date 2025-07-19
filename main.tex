@@ -1,0 +1,53 @@
+\documentclass{article}
+% custom Bengali section package
+\usepackage{bengali_Style}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ \usepackage{url}
+ \usepackage{graphicx}
+ \usepackage{array}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \title{রচনার নামঃ বাংলা ভাষা}
+% \author{লেখকঃ উইকিপিডিয়া}
+% \date{\today (১২ই ভাদ্র ১৩২১ বঙ্গাব্দ)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+
+       \textbf{শিরোনাম বাংলা ভাষা}
+
+       \vspace{0.5cm}
+        সাবটাইটেল
+            
+       \vspace{1.0cm}
+
+       \textbf{উইকিপিডিয়া}% Author Name
+
+       \vfill
+       % A thesis presented for the degree of\\
+       % Doctor of Philosophy
+       \vspace{0.2cm}     
+       \includegraphics[width=0.2\textwidth]{figs/sample.jpg} \\
+       % Department Name\\
+       % University Name\\
+       % Country\\
+       তারিখঃ \today (১২ই ভাদ্র ১৩২১ বঙ্গাব্দ)
+            
+   \end{center}
+\end{titlepage}
+\tableofcontents
+\newpage
+\input{_secs/first_sec}
+\input{_secs/second_sec}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bibliography %%%
+\bibliographystyle{plain} 
+\bibliography{reference.bib}
+\end{document}
